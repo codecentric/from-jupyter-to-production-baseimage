@@ -1,0 +1,14 @@
+name: dvc-tutorial
+channels:
+  - conda-forge
+dependencies:
+  - python=3.6
+  - fire=0.2.1
+  - jupyterlab=2.2.8
+  - dvc==1.7.2
+  - keras==2.2.4
+  - tensorflow==1.14.0
+  - opencv==4.1.0
+  - pillow==7.2.0
+  - numpy==1.16.4
+  - pandas==0.25.0
