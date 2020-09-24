@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3.7
 
 ENV SHELL /bin/bash
 
@@ -9,7 +9,7 @@ RUN apt-get -qq update && apt-get -qq -y install curl bzip2 \
     && curl -sSL https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -o /tmp/miniconda.sh \
     && bash /tmp/miniconda.sh -bfp /usr/local \
     && rm -rf /tmp/miniconda.sh \
-    && conda install -y python=3.6 \
+    && conda install -y python=3.7 \
     && conda update conda \
     && apt-get -qq -y remove curl bzip2 \
     && apt-get -qq -y autoremove \
@@ -27,4 +27,4 @@ RUN conda env create -f environment.yml
 ADD fruits fruits
 
 EXPOSE 8888
-CMD ["conda", "run", "-n", "dvc-tutorial", "jupyter", "lab"]
+CMD ["conda", "run", "-n", "workshop", "jupyter", "lab"]
