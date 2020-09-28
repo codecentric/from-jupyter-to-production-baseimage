@@ -26,5 +26,5 @@ RUN conda env create -f environment.yml
 
 ADD fruits fruits
 
-EXPOSE 8888
+EXPOSE 8888 4141 5000
 CMD ["conda", "run", "-n", "workshop", "jupyter", "lab"]
