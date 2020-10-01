@@ -6,23 +6,23 @@ https://github.com/codecentric/from-jupyter-to-production-workshop
 
 ## Jupyterlab starten
 ```bash
-docker pull codecentric/from-jupyter-to-production-image
+docker pull codecentric/from-jupyter-to-production-baseimage
 ```
 ## Run on Mac & Linux
 
 ```bash
-docker run -p 8888:8888 -v $(pwd)/notebooks:/workshop/notebooks codecentric/from-jupyter-to-production-image
+docker run -p 8888:8888 -v $(pwd)/notebooks:/workshop/notebooks codecentric/from-jupyter-to-production-baseimage
 ```
 
 ## Run on Windows
 
 ```bash
-docker run -p 8888:8888 -v %cd%/notebooks:/workshop/notebooks codecentric/from-jupyter-to-production-image
+docker run -p 8888:8888 -v %cd%/notebooks:/workshop/notebooks codecentric/from-jupyter-to-production-baseimage
 ```
 
 ## Build locally
 
 ```bash
-cd /path/to/from-jupyter-to-production-image
+cd /path/to/from-jupyter-to-production-baseimage
 docker build -t ws_jupyter_base .
 ```
