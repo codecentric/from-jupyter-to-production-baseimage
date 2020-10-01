@@ -1,5 +1,7 @@
 # From Jupyter to Production
 
+JupyterLab image for workshop: From Jupyter to Production - production-ready data science projects.
+
 ## Jupyterlab starten
 ```bash
 docker pull codecentric/from-jupyter-to-production-image
