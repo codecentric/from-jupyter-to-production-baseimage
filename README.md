@@ -6,18 +6,18 @@ https://github.com/codecentric/from-jupyter-to-production-workshop
 
 ## Jupyterlab starten
 ```bash
-docker pull codecentric/from-jupyter-to-production-baseimage
+docker pull radtkem/from-jupyter-to-production-baseimage
 ```
 ## Run on Mac & Linux
 
 ```bash
-docker run -p 8888:8888 -v $(pwd)/notebooks:/workshop/notebooks codecentric/from-jupyter-to-production-baseimage
+docker run -p 8888:8888 -v $(pwd)/notebooks:/workshop/notebooks radtkem/from-jupyter-to-production-baseimage
 ```
 
 ## Run on Windows
 
 ```bash
-docker run -p 8888:8888 -v %cd%/notebooks:/workshop/notebooks codecentric/from-jupyter-to-production-baseimage
+docker run -p 8888:8888 -v %cd%/notebooks:/workshop/notebooks radtkem/from-jupyter-to-production-baseimage
 ```
 
 ## Build locally
