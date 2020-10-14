@@ -18,13 +18,8 @@ RUN apt-get -qq update && apt-get -qq -y install curl bzip2 \
     && conda clean --all --yes
 ENV PATH /opt/conda/bin:$PATH
 
-RUN apt-get update
-RUN apt-get install -y libgl1-mesa-glx
-
 COPY environment.yml .
 RUN conda env create -f environment.yml
-
-ADD fruits fruits
 
 EXPOSE 8888 4141 5000
 CMD ["conda", "run", "-n", "workshop", "jupyter", "lab"]
