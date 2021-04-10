@@ -14,15 +14,14 @@ RUN apt-get -qq update && apt-get -qq -y install curl bzip2 \
     && apt-get -qq -y remove bzip2 \
     && apt-get -qq -y autoremove \
     && apt-get autoclean \
-    && rm -rf /var/lib/apt/lists/* /var/log/dpkg.log \
-    && conda clean --all --yes
+    && rm -rf /var/lib/apt/lists/* /var/log/dpkg.log
 ENV PATH /opt/conda/bin:$PATH
 
-RUN apt-get update
-RUN apt-get install -y libgl1-mesa-glx
+RUN apt-get update && apt-get install -y libgl1-mesa-glx
 
 COPY environment.yml .
-RUN conda env create -f environment.yml
+RUN conda env create -f environment.yml 
+RUN conda clean --all --yes && conda init bash 
 
 EXPOSE 8888 4141 5000
 CMD ["conda", "run", "-n", "workshop", "jupyter", "lab"]
