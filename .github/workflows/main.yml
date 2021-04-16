@@ -33,5 +33,6 @@ jobs:
         with:
           context: .
           tags: codecentric/from-jupyter-to-production-baseimage:latest
+          push: true
           secrets: |
             "github_token=${{ secrets.GITHUB_TOKEN }}"
