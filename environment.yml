@@ -4,11 +4,11 @@ channels:
 dependencies:
   - python==3.7.9
   - fire==0.4.0
-  - jupyterlab==3.0.13
-  - dvc==2.0.17
+  - jupyterlab==3.0.14
+  - dvc==2.0.18
   - opencv==4.1.0
   - pillow==7.2.0
-  - pandas==1.2.3
+  - pandas==1.2.4
   - kedro==0.17.2
   - mlflow==1.15.0
   - scikit-learn==0.24.1
