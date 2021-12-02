@@ -10,7 +10,7 @@ ADD configs/jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
 WORKDIR /workshop
 
 RUN apt-get -qq update && apt-get -qq -y install curl bzip2 
-RUN if [ "${ARCH}" = "arm64v8" ] ; then curl -sSL https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-aarch64.sh -o /tmp/miniconda.sh; else curl -sSL https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -o /tmp/miniconda.sh ; fi 
+RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ] ; then curl -sSL https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-aarch64.sh -o /tmp/miniconda.sh; else curl -sSL https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -o /tmp/miniconda.sh ; fi 
 RUN bash /tmp/miniconda.sh -bfp /usr/local \
     && rm -rf /tmp/miniconda.sh \
     && conda install -y python=3.8 \
