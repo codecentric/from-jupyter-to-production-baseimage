@@ -30,7 +30,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -54,16 +54,29 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
    
-      - name: Build and push Docker images
+      - name: Build and push Docker image for amd64
         id: docker_build
         uses: docker/build-push-action@v2.4.0
         with:
           context: .
-          tags: codecentric/from-jupyter-to-production-baseimage:latest
+          tags: codecentric/from-jupyter-to-production-baseimage:amd64-latest
           push: true
           builder: ${{ steps.buildx.outputs.name }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+          build-args: ARCH=amd64
+
+      - name: Build and push Docker image for arm64v8
+        id: docker_build
+        uses: docker/build-push-action@v2.4.0
+        with:
+          context: .
+          tags: codecentric/from-jupyter-to-production-baseimage:arm64v8-latest
+          push: true
+          builder: ${{ steps.buildx.outputs.name }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+          build-args: ARCH=arm64v8
           
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
