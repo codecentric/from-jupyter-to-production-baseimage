@@ -18,6 +18,8 @@ Run in `from-jupyter-to-production-workshop` directory, containing the notebooks
 docker run -p 8888:8888 -v $(pwd)/notebooks:/workshop/notebooks radtkem/from-jupyter-to-production-baseimage
 ```
 
+*Note: Running on Apple Silicon/M1 is currently not supported*
+
 ## Run on Windows
 
 Run in `from-jupyter-to-production-workshop` directory, containing the notebooks.
