@@ -23,8 +23,5 @@ COPY environment.yml .
 RUN conda env create -f environment.yml 
 RUN conda clean --all --yes && conda init bash 
 
-# dirty hack to patch ipython to work with apple silicon/m1 processors
-RUN find / -name "eventloops.py" -print0 | xargs -0 sed -i -e "s/V('10.9')/V('10.9') and platform.mac_ver()[2] != 'arm64'/"
-
 EXPOSE 8888 4141 5000
 CMD ["conda", "run", "-n", "workshop", "jupyter", "lab"]
