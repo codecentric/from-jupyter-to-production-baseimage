@@ -33,6 +33,8 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
+        with:
+          platforms: arm64,amd64
 
       - name: Set up Docker Buildx
         id: buildx
@@ -54,29 +56,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
    
-      - name: Build and push Docker image for amd64
+      - name: Build and push Docker image
         id: docker_build_amd64
         uses: docker/build-push-action@v2.4.0
         with:
           context: .
-          tags: codecentric/from-jupyter-to-production-baseimage:amd64-latest
+          tags: codecentric/from-jupyter-to-production-baseimage:latest
           push: true
           builder: ${{ steps.buildx.outputs.name }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-          build-args: ARCH=amd64
-
-      - name: Build and push Docker image for arm64v8
-        id: docker_build_arm64
-        uses: docker/build-push-action@v2.4.0
-        with:
-          context: .
-          tags: codecentric/from-jupyter-to-production-baseimage:arm64v8-latest
-          push: true
-          builder: ${{ steps.buildx.outputs.name }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-          build-args: ARCH=arm64v8
+          platforms: linux/amd64,linux/arm64
           
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

@@ -1,6 +1,8 @@
-ARG ARCH
-FROM $ARCH/python:3.8
-ARG ARCH
+FROM python:3.8
+
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM" > /log
 
 ENV SHELL /bin/bash
 
