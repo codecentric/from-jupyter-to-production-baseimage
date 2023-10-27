@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "workshop"
 version = "23.10.12"
-description = ""
-authors = ["Your Name <you@example.com>"]
+description = "Baseimage used in the workshop 'from jupyter to production'"
+authors = ["codecentric"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
