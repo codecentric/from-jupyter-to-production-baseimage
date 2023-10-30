@@ -778,6 +778,7 @@ c.ServerApp.allow_root = True
 #  Default: 'jupyter_server.services.contents.largefilemanager.AsyncLargeFileManager'
 # c.ServerApp.contents_manager_class = 'jupyter_server.services.contents.largefilemanager.AsyncLargeFileManager'
 
+
 ## DEPRECATED. Use IdentityProvider.cookie_options
 #  Default: {}
 # c.ServerApp.cookie_options = {}
@@ -896,7 +897,7 @@ c.ServerApp.ip = '0.0.0.0'
 #  be used to enable and disable the loading ofthe extensions. The extensions
 #  will be loaded in alphabetical order.
 #  Default: {}
-# c.ServerApp.jpserver_extensions = {}
+c.ServerApp.jpserver_extensions = {"jupytext":True}
 
 ## The kernel manager class to use.
 #  Default: 'jupyter_server.services.kernels.kernelmanager.MappingKernelManager'

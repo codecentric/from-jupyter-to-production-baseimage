@@ -17,8 +17,20 @@ dvc = ">=3.22"
 jupyterlab-lsp = "^5.0.0"
 python-lsp-server = {extras = ["all"], version = "^1.8.2"}
 jupyter-lsp = "^2.2.0"
+jupytext = "^1.15.2"
 
+
+[tool.poetry.group.dagster-webserver.dependencies]
+dagster-webserver = "^1.5.5"
+dagster-postgres = "^0.21.5"
+requests-toolbelt = "0.10.1"
+urllib3 = "1.26.15"
+
+
+[tool.poetry.group.dagster.dependencies]
+dagster = "^1.5.5"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+

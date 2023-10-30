@@ -60,11 +60,11 @@ RUN --mount=type=cache,target=/root/.cache \
 
 # copy project requirement files here to ensure they will be cached.
 WORKDIR $PYSETUP_PATH
-COPY poetry.lock pyproject.toml ./
+COPY ../../poetry.lock pyproject.toml ./
 
 # install runtime deps - uses $POETRY_VIRTUALENVS_IN_PROJECT internally
 RUN --mount=type=cache,target=/root/.cache \
-    poetry install
+    poetry install --only dagster-webserver --only dagster
 
 
 ################################
@@ -74,9 +74,18 @@ RUN --mount=type=cache,target=/root/.cache \
 FROM python-base as production
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
-ADD configs/jupyter_lab_config.py /root/.jupyter/jupyter_lab_config.py
-WORKDIR /workshop
-EXPOSE 8888 4141 5001
+RUN mkdir -p /opt/dagster/dagster_home /opt/dagster/app
+
+ENV DAGSTER_HOME=/opt/dagster/dagster_home/
+
+# Copy your  workspace to /opt/dagster/app
+
+COPY ./docker/dagster/workspace.yaml /opt/dagster/app/
+COPY ./docker/dagster/dagster.yaml $DAGSTER_HOME/
+
+
+WORKDIR /opt/dagster/app
+EXPOSE 3000
 ENV SHELL="/bin/bash"
 
-ENTRYPOINT ["jupyter", "lab"]
+ENTRYPOINT ["dagster","dev","-h","0.0.0.0","-p","3000"]
