@@ -48,12 +48,25 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
    
-      - name: Build and push Docker image
+      - name: Build and push jupyter Docker image
         id: docker_build_amd64
         uses: docker/build-push-action@v2.4.0
         with:
           context: .
+          file: ${{context}}docker/jupyter/Dockerfile
           tags: codecentric/from-jupyter-to-production-baseimage:latest
+          push: true
+          builder: ${{ steps.buildx.outputs.name }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+          platforms: linux/amd64,linux/arm64
+      - name: Build and push dagster Docker image
+        id: docker_build_amd64
+        uses: docker/build-push-action@v2.4.0
+        with:
+          context: .
+          file: ${{context}}docker/dagster/Dockerfile
+          tags: codecentric/from-jupyter-to-production-dagster-webserver:latest
           push: true
           builder: ${{ steps.buildx.outputs.name }}
           cache-from: type=local,src=/tmp/.buildx-cache
