@@ -51,10 +51,11 @@ RUN apt-get update \
         curl \
         # deps for building python deps
         build-essential \
+        gcc \
         git
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
-# The --mount will mount the buildx cache directory to where 
+# The --mount will mount the buildx cache directory to where
 # Poetry and Pip store their cache so that they can re-use it
 RUN --mount=type=cache,target=/root/.cache \
     curl -sSL https://install.python-poetry.org | python3 -
@@ -65,7 +66,8 @@ COPY ../../poetry.lock pyproject.toml ./
 
 # install runtime deps - uses $POETRY_VIRTUALENVS_IN_PROJECT internally
 RUN --mount=type=cache,target=/root/.cache \
-    poetry install --with dagster,mlflow --without dagster-webserver
+    poetry install --only mlflow
+
 
 ################################
 # PRODUCTION
@@ -74,12 +76,11 @@ RUN --mount=type=cache,target=/root/.cache \
 FROM python-base as production
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
-ADD ../../configs/jupyter_lab_config.py /root/.jupyter/jupyter_lab_config.py
-ADD ../../configs/jupytext.toml /root/.config/jupytext.toml
 
-WORKDIR /workshop
-EXPOSE 8888 4141
+WORKDIR /ml_data
+EXPOSE 5001
 ENV SHELL="/bin/bash"
 ENV GIT_PYTHON_REFRESH="quiet"
 
-ENTRYPOINT ["jupyter", "lab"]
+
+ENTRYPOINT ["mlflow","server","--host","0.0.0.0","--port","5001"]
