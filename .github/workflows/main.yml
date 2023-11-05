@@ -49,7 +49,7 @@ jobs:
             ${{ runner.os }}-buildx-
    
       - name: Build and push jupyter Docker image
-        id: docker_build_amd64
+        id: docker_build_amd64_jupyter
         uses: docker/build-push-action@v2.4.0
         with:
           context: .
@@ -61,7 +61,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/amd64,linux/arm64
       - name: Build and push dagster Docker image
-        id: docker_build_amd64
+        id: docker_build_amd64_dagster
         uses: docker/build-push-action@v2.4.0
         with:
           context: .
@@ -73,7 +73,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/amd64,linux/arm64
       - name: Build and push mlflow Docker image
-        id: docker_build_amd64
+        id: docker_build_amd64_mlflow
         uses: docker/build-push-action@v2.4.0
         with:
           context: .
