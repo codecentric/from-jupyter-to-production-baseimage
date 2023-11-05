@@ -22,9 +22,10 @@ fastapi = "^0.104.1"
 uvicorn = "^0.24.0"
 onnxruntime = "^1.16.1"
 skl2onnx = "^1.15.0"
+tqdm = "^4.66.1"
 torch = "2.0.0"
 torchvision = "0.15.1"
-tqdm = "^4.66.1"
+seaborn = "^0.13.0"
 
 
 [tool.poetry.group.dagster-webserver.dependencies]
