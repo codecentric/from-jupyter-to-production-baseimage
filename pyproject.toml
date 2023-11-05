@@ -28,18 +28,18 @@ torchvision = "0.15.1"
 seaborn = "^0.13.0"
 
 
-[tool.poetry.group.dagster-webserver.dependencies]
+[tool.poetry.group.dagster.dependencies]
 dagster-webserver = "^1.5.5"
 dagster-postgres = "^0.21.5"
 requests-toolbelt = "0.10.1"
 urllib3 = "1.26.15"
+dagster = "^1.5.5"
+
 
 [tool.poetry.group.mlflow.dependencies]
 mlflow = ">=2.7"
 
 
-[tool.poetry.group.dagster.dependencies]
-dagster = "^1.5.5"
 
 [build-system]
 requires = ["poetry-core"]
