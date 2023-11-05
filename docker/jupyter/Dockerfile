@@ -51,6 +51,7 @@ RUN apt-get update \
         curl \
         # deps for building python deps
         build-essential \
+        # git
         git
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
