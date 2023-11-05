@@ -1,0 +1,3 @@
+[formats]
+"dagster/" = "ipynb"
+"dagster/scripts/" = "py:percent"
