@@ -66,7 +66,7 @@ COPY ../../poetry.lock pyproject.toml ./
 
 # install runtime deps - uses $POETRY_VIRTUALENVS_IN_PROJECT internally
 RUN --mount=type=cache,target=/root/.cache \
-    poetry install --with dagster,mlflow --without dagster-webserver
+    poetry install --with dagster,mlflow, dagster-webserver
 
 ################################
 # PRODUCTION
