@@ -35,6 +35,13 @@ jobs:
         uses: docker/setup-qemu-action@v1
         with:
           platforms: amd64,arm64
+      - name: free disk space
+        run: |
+          sudo swapoff -a
+          sudo rm -f /swapfile
+          sudo apt clean
+          docker rmi $(docker image ls -aq)
+          df -h
 
       - name: Set up Docker Buildx
         id: buildx
