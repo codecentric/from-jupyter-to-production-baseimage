@@ -26,6 +26,7 @@ jobs:
 
       - uses: ./.github/actions/shared-build-steps
         with:
+          shell: bash
           dockerhub_user: ${{ secrets.DOCKERHUB_USER }}
           dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
           runner_os: ${{ runner.os }}
@@ -63,6 +64,7 @@ jobs:
 
       - uses: ./.github/actions/shared-build-steps
         with:
+          shell: bash
           dockerhub_user: ${{ secrets.DOCKERHUB_USER }}
           dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
           runner_os: ${{ runner.os }}
