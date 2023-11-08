@@ -23,6 +23,7 @@ runs:
         platforms: amd64,arm64
 
     - name: Free disk space 🧹
+      shell: bash
       run: |
         sudo swapoff -a
         sudo rm -f /swapfile
