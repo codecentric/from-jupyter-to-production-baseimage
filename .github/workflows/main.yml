@@ -25,6 +25,11 @@ jobs:
         uses: actions/checkout@v2
 
       - uses: ./.github/actions/shared-build-steps
+        with:
+          dockerhub_user: ${{ secrets.DOCKERHUB_USER }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          runner_os: ${{ runner.os }}
+          github_sha: ${{ github.sha }}
 
       - name: Docker meta 💬
         id: meta
@@ -57,6 +62,11 @@ jobs:
         uses: actions/checkout@v2
 
       - uses: ./.github/actions/shared-build-steps
+        with:
+          dockerhub_user: ${{ secrets.DOCKERHUB_USER }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          runner_os: ${{ runner.os }}
+          github_sha: ${{ github.sha }}
 
       - name: Docker meta 💬
         id: meta

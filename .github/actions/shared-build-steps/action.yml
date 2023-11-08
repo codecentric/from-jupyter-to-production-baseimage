@@ -1,12 +1,21 @@
 name: "Shared buildsteps"
+inputs:
+  dockerhub_user:
+    required: true
+  dockerhub_password:
+    required: true
+  runner_os:
+    required: true
+  github_sha:
+    required: true
 runs:
   using: "composite"
   steps:
     - name: Login to Docker Hub 🔐🐳
       uses: docker/login-action@v1
       with:
-        username: ${{ secrets.DOCKERHUB_USER }}
-        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        username: ${{ inputs.dockerhub_user }}
+        password: ${{ inputs.dockerhub_password }}
 
     - name: Set up QEMU 🏗️
       uses: docker/setup-qemu-action@v1
@@ -29,6 +38,6 @@ runs:
       uses: actions/cache@v2
       with:
         path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        key: ${{ inputs.runner_os }}-buildx-${{ inputs.github_sha }}
         restore-keys: |
-          ${{ runner.os }}-buildx-
+          ${{ inputs.runner_os }}-buildx-
