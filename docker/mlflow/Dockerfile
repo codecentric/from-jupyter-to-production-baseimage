@@ -16,7 +16,7 @@ ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     \
     # pip
-    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PIP_DISABLE_PIP_VERSION_CHECK=on
     PIP_DEFAULT_TIMEOUT=100 \
     \
     # poetry
@@ -51,8 +51,7 @@ RUN apt-get update \
         curl \
         # deps for building python deps
         build-essential \
-        gcc \
-        git
+        gcc
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
 # The --mount will mount the buildx cache directory to where
@@ -76,11 +75,9 @@ RUN --mount=type=cache,target=/root/.cache \
 FROM python-base as production
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
-
 WORKDIR /ml_data
 EXPOSE 5001
 ENV SHELL="/bin/bash"
-ENV GIT_PYTHON_REFRESH="quiet"
 
 
 ENTRYPOINT ["mlflow","server","--host","0.0.0.0","--port","5001"]
