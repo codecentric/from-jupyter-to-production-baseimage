@@ -46,7 +46,7 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 ################################
 FROM python-base as builder-base
 RUN apt-get update
-RUN apt-get install git
+RUN apt-get install -y git
 RUN apt-get install --no-install-recommends -y \
     # deps for installing poetry
     curl \
