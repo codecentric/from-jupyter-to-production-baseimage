@@ -27,8 +27,8 @@ seaborn = "^0.13.0"
 pytorch-lightning = "^1.9.0"
 torchmetrics = "^1.2.0"
 lightning-bolts = "^0.7.0"
-torch = "~2.0.0"
 torchvision = "~0.15.0"
+torch = "2.0.0"
 
 [tool.poetry.group.dagster.dependencies]
 dagster-webserver = "^1.5.5"
