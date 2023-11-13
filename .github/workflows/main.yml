@@ -1,89 +1,86 @@
-# This is a basic workflow to help you get started with Actions
+#This GitHub Workflow builds the necessary docker images for the `from jupyter to production workshop`
+name: Build and publish workshop Docker images 🔨🐳🚀
 
-name: CI
-
-# Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
+  # Triggers the workflow when a new tag with the pattern 'v*.*.*' is pushed to the repository
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    tags:
+      - 'v*.*.*'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  # This job creates and publishes the mlflow docker images
+  build-mlflow:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Checkout Repo ✅
+        uses: actions/checkout@v2
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+      - name: Job preparation 🛫 # Steps that must be carried out before creating the Docker images
+        uses: ./.github/actions/shared-build-steps
         with:
-          platforms: amd64
+          dockerhub_user: ${{ secrets.DOCKERHUB_USER }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          runner_os: ${{ runner.os }}
+          github_sha: ${{ github.sha }}
 
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v1
+      - name: Docker meta 💬 # Creating meta information such as the image tag for the Docker image
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: codecentric/from-jupyter-to-production-mlflow
 
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-   
-      - name: Build and push jupyter Docker image
-        id: docker_build_amd64_jupyter
-        uses: docker/build-push-action@v2.4.0
-        with:
-          context: .
-          file: ./docker/jupyter/Dockerfile
-          tags: codecentric/from-jupyter-to-production-jupyter:latest
-          push: true
-          builder: ${{ steps.buildx.outputs.name }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-          platforms: linux/amd64
-      - name: Build and push dagster Docker image
-        id: docker_build_amd64_dagster
-        uses: docker/build-push-action@v2.4.0
-        with:
-          context: .
-          file: ./docker/dagster/Dockerfile
-          tags: codecentric/from-jupyter-to-production-dagster:latest
-          push: true
-          builder: ${{ steps.buildx.outputs.name }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-          platforms: linux/amd64
-      - name: Build and push mlflow Docker image
-        id: docker_build_amd64_mlflow
+      - name: Build and push mlflow Docker image 🔨🐳
+        id: docker_build_mlflow
         uses: docker/build-push-action@v2.4.0
         with:
           context: .
           file: ./docker/mlflow/Dockerfile
-          tags: codecentric/from-jupyter-to-production-mlflow:latest
-          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          push: ${{ github.event_name != 'pull_request' }}
           builder: ${{ steps.buildx.outputs.name }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
+
+  # This job creates and publishes the jupyter docker images
+  build-jupyter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo ✅
+        uses: actions/checkout@v2
+
+      - name: Job preparation 🛫 # Steps that must be carried out before creating the Docker images
+        uses: ./.github/actions/shared-build-steps
+        with:
+          dockerhub_user: ${{ secrets.DOCKERHUB_USER }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          runner_os: ${{ runner.os }}
+          github_sha: ${{ github.sha }}
+
+      - name: Docker meta 💬 # Creating meta information such as the image tag for the Docker image
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: codecentric/from-jupyter-to-production-jupyter
+
+      - name: Build and push juypter Docker image 🔨🐳
+        id: docker_build_mlflow
+        uses: docker/build-push-action@v2.4.0
+        with:
+          context: .
+          file: ./docker/jupyter/Dockerfile
+          tags: ${{ steps.meta.outputs.tags }}
+          push: ${{ github.event_name != 'pull_request' }}
+          builder: ${{ steps.buildx.outputs.name }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+          platforms: linux/amd64,linux/arm64
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

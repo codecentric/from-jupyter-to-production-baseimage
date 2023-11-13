@@ -50,12 +50,10 @@ RUN apt-get update \
         # deps for installing poetry
         curl \
         # deps for building python deps
-        build-essential \
-        # git
-        git
+        build-essential
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
-# The --mount will mount the buildx cache directory to where 
+# The --mount will mount the buildx cache directory to where
 # Poetry and Pip store their cache so that they can re-use it
 RUN --mount=type=cache,target=/root/.cache \
     curl -sSL https://install.python-poetry.org | python3 -
@@ -76,12 +74,13 @@ RUN --mount=type=cache,target=/root/.cache \
 FROM python-base as production
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
+RUN apt-get update && apt-get install -y git
+
 ADD ../../configs/jupyter_lab_config.py /root/.jupyter/jupyter_lab_config.py
 ADD ../../configs/jupytext.toml /root/.config/jupytext.toml
 
 WORKDIR /workshop
 EXPOSE 8888 4141
 ENV SHELL="/bin/bash"
-ENV GIT_PYTHON_REFRESH="quiet"
 
 ENTRYPOINT ["jupyter", "lab"]
