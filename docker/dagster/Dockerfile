@@ -93,4 +93,4 @@ WORKDIR /opt/dagster/app
 EXPOSE 3000
 ENV SHELL="/bin/bash"
 
-ENTRYPOINT ["dagster","dev","-h","0.0.0.0","-p","3000","-f","./scripts/dagster.py"]
+ENTRYPOINT ["dagster","dev","-h","0.0.0.0","-p","3000","--help"]
