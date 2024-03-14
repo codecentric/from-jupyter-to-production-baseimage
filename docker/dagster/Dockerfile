@@ -53,14 +53,20 @@ RUN apt-get update \
         build-essential
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
-# The --mount will mount the buildx cache directory to where 
+# The --mount will mount the buildx cache directory to where
 # Poetry and Pip store their cache so that they can re-use it
 RUN --mount=type=cache,target=/root/.cache \
     curl -sSL https://install.python-poetry.org | python3 -
 
 # copy project requirement files here to ensure they will be cached.
 WORKDIR $PYSETUP_PATH
-COPY ../../poetry.lock pyproject.toml ./
+
+COPY pyproject.toml ./
+
+COPY poetry.lock ./
+
+
+
 
 # install runtime deps - uses $POETRY_VIRTUALENVS_IN_PROJECT internally
 RUN --mount=type=cache,target=/root/.cache \
@@ -80,7 +86,6 @@ ENV DAGSTER_HOME=/opt/dagster/dagster_home/
 
 # Copy your  workspace to /opt/dagster/app
 
-COPY ./docker/dagster/workspace.yaml /opt/dagster/app/
 COPY ./docker/dagster/dagster.yaml $DAGSTER_HOME/
 
 
@@ -88,4 +93,4 @@ WORKDIR /opt/dagster/app
 EXPOSE 3000
 ENV SHELL="/bin/bash"
 
-ENTRYPOINT ["dagster","dev","-h","0.0.0.0","-p","3000"]
+ENTRYPOINT ["dagster","dev","-h","0.0.0.0","-p","3000","-f","./scripts/dagster.py"]

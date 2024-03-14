@@ -24,11 +24,7 @@ onnxruntime = "^1.16.1"
 skl2onnx = "^1.15.0"
 tqdm = "^4.66.1"
 seaborn = "^0.13.0"
-pytorch-lightning = "^1.9.0"
-torchmetrics = "^1.2.0"
-lightning-bolts = "^0.7.0"
-torchvision = "~0.15.0"
-torch = "2.0.0"
+xgboost = "^2.0.3"
 
 [tool.poetry.group.dagster.dependencies]
 dagster-webserver = "^1.5.5"
