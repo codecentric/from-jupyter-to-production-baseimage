@@ -86,7 +86,7 @@ ENV DAGSTER_HOME=/opt/dagster/dagster_home/
 
 # Copy your  workspace to /opt/dagster/app
 
-COPY ./docker/dagster/dagster.yaml $DAGSTER_HOME/
+COPY docker/dagster/dagster.yaml $DAGSTER_HOME/
 
 
 WORKDIR /opt/dagster/app

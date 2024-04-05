@@ -60,7 +60,7 @@ RUN --mount=type=cache,target=/root/.cache \
 
 # copy project requirement files here to ensure they will be cached.
 WORKDIR $PYSETUP_PATH
-COPY ../../poetry.lock pyproject.toml ./
+COPY poetry.lock pyproject.toml ./
 
 # install runtime deps - uses $POETRY_VIRTUALENVS_IN_PROJECT internally
 RUN --mount=type=cache,target=/root/.cache \
@@ -76,8 +76,8 @@ COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
 RUN apt-get update && apt-get install -y git
 
-ADD ../../configs/jupyter_lab_config.py /root/.jupyter/jupyter_lab_config.py
-ADD ../../configs/jupytext.toml /root/.config/jupytext.toml
+ADD configs/jupyter_lab_config.py /root/.jupyter/jupyter_lab_config.py
+ADD configs/jupytext.toml /root/.config/jupytext.toml
 
 WORKDIR /workshop
 EXPOSE 8888 4141
