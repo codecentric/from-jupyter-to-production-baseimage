@@ -6,7 +6,7 @@ authors = ["codecentric"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.11, <3.13"
 jupyterlab = ">4"
 pillow = ">=10"
 pandas = ">=2"
@@ -25,6 +25,8 @@ skl2onnx = "^1.15.0"
 tqdm = "^4.66.1"
 seaborn = "^0.13.0"
 xgboost = "^2.0.3"
+jupyterlab-code-formatter = "^2.2.1"
+black = "^24.3.0"
 
 [tool.poetry.group.dagster.dependencies]
 dagster-webserver = "^1.5.5"
@@ -32,6 +34,7 @@ dagster-postgres = "^0.21.5"
 requests-toolbelt = "0.10.1"
 urllib3 = "1.26.15"
 dagster = "^1.5.5"
+dagster-mlflow = "^0.21"
 
 
 [tool.poetry.group.mlflow.dependencies]
