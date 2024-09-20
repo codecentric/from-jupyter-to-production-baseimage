@@ -17,7 +17,7 @@ jupyterlab-lsp = "^5.0.0"
 python-lsp-server = {extras = ["all"], version = "^1.8.2"}
 jupyter-lsp = "^2.2.0"
 jupytext = "^1.15.2"
-pygit2 = "1.13.1"
+pygit2 = "^1.13.1"
 fastapi = "^0.104.1"
 uvicorn = "^0.24.0"
 onnxruntime = "^1.16.1"
