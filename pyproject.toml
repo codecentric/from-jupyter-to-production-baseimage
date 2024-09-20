@@ -29,12 +29,12 @@ jupyterlab-code-formatter = "^2.2.1"
 black = "^24.3.0"
 
 [tool.poetry.group.dagster.dependencies]
-dagster-webserver = "^1.5.5"
-dagster-postgres = "^0.21.5"
+dagster-webserver = "^1.8.7"
+dagster-postgres = "^0.24.7"
 requests-toolbelt = "0.10.1"
 urllib3 = "1.26.15"
-dagster = "^1.5.5"
-dagster-mlflow = "^0.21"
+dagster = "^1.8.0"
+dagster-mlflow = "^0.24.7"
 
 
 [tool.poetry.group.mlflow.dependencies]
