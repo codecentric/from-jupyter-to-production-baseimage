@@ -10,7 +10,7 @@ FROM --platform=$TARGETPLATFORM python:3.11-slim as python-base
 
 ARG TARGETPLATFORM
 
-    # python
+# python
 ENV PYTHONUNBUFFERED=1 \
     # prevents python creating .pyc files
     PYTHONDONTWRITEBYTECODE=1 \
@@ -21,7 +21,7 @@ ENV PYTHONUNBUFFERED=1 \
     \
     # poetry
     # https://python-poetry.org/docs/configuration/#using-environment-variables
-    POETRY_VERSION=1.6.1 \
+    POETRY_VERSION=1.8.4 \
     # make poetry install to this location
     POETRY_HOME="/opt/poetry" \
     # make poetry create the virtual environment in the project's root
@@ -47,10 +47,10 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 FROM python-base as builder-base
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
-        # deps for installing poetry
-        curl \
-        # deps for building python deps
-        build-essential
+    # deps for installing poetry
+    curl \
+    # deps for building python deps
+    build-essential
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
 # The --mount will mount the buildx cache directory to where
@@ -76,8 +76,8 @@ COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
 RUN apt-get update && apt-get install -y git
 
-ADD configs/jupyter_lab_config.py /root/.jupyter/jupyter_lab_config.py
-ADD configs/jupytext.toml /root/.config/jupytext.toml
+COPY configs/jupyter_lab_config.py /root/.jupyter/jupyter_lab_config.py
+COPY configs/jupytext.toml /root/.config/jupytext.toml
 
 WORKDIR /workshop
 EXPOSE 8888 4141
