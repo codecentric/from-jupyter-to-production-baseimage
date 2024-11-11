@@ -117,3 +117,74 @@ jobs:
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+  build-code-server:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo ✅
+        uses: actions/checkout@v2
+
+      - name: Job preparation 🛫 # Steps that must be carried out before creating the Docker images
+        uses: ./.github/actions/shared-build-steps
+        with:
+          dockerhub_user: ${{ secrets.DOCKERHUB_USER }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          runner_os: ${{ runner.os }}
+          github_sha: ${{ github.sha }}
+
+      - name: Docker meta 💬 # Creating meta information such as the image tag for the Docker image
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: codecentric/from-jupyter-to-production-code-server
+
+      - name: Build and push code-server Docker image 🔨🐳
+        id: docker_build_code-server
+        uses: docker/build-push-action@v2.4.0
+        with:
+          context: .
+          file: ./docker/code-server/Dockerfile
+          tags: ${{ steps.meta.outputs.tags }}
+          push: ${{ github.event_name != 'pull_request' }}
+          builder: ${{ steps.buildx.outputs.name }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+          platforms: linux/amd64,linux/arm64
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
+
+  build-registry:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo ✅
+        uses: actions/checkout@v2
+
+      - name: Job preparation 🛫 # Steps that must be carried out before creating the Docker images
+        uses: ./.github/actions/shared-build-steps
+        with:
+          dockerhub_user: ${{ secrets.DOCKERHUB_USER }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          runner_os: ${{ runner.os }}
+          github_sha: ${{ github.sha }}
+
+      - name: Docker meta 💬 # Creating meta information such as the image tag for the Docker image
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: codecentric/from-jupyter-to-production-registry
+
+      - name: Build and push registry Docker image 🔨🐳
+        id: docker_build_registry
+        uses: docker/build-push-action@v2.4.0
+        with:
+          context: .
+          file: ./docker/registry/Dockerfile
+          tags: ${{ steps.meta.outputs.tags }}
+          push: ${{ github.event_name != 'pull_request' }}
+          builder: ${{ steps.buildx.outputs.name }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+          platforms: linux/amd64,linux/arm64
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
