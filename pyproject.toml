@@ -35,6 +35,10 @@ dagster-mlflow = "^0.24.7"
 
 [tool.poetry.group.mlflow.dependencies]
 mlflow = ">=2.7"
+psycopg2-binary = "^2.9.10"
+boto3 = "^1.35.57"
+cryptography = "^43.0.3"
+pymysql = "^1.1.1"
 
 
 [tool.poetry.group.onnx.dependencies]

@@ -75,9 +75,15 @@ RUN --mount=type=cache,target=/root/.cache \
 FROM python-base as production
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
+COPY ./docker/mlflow/init-mlflow.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
+
 WORKDIR /ml_data
+EXPOSE 5000
 EXPOSE 5001
 ENV SHELL="/bin/bash"
 
 
-ENTRYPOINT ["mlflow","server","--host","0.0.0.0","--port","5001"]
+ENTRYPOINT ["/entrypoint.sh"]
