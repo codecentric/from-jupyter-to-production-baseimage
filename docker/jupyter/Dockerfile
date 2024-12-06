@@ -6,7 +6,7 @@
 # PYTHON-BASE
 # Sets up all our shared environment variables
 ################################
-FROM --platform=$TARGETPLATFORM python:3.11-slim as python-base
+FROM --platform=$TARGETPLATFORM python:3.11-slim AS python-base
 
 ARG TARGETPLATFORM
 
@@ -44,7 +44,7 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 # BUILDER-BASE
 # Used to build deps + create our virtual environment
 ################################
-FROM python-base as builder-base
+FROM python-base AS builder-base
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
     # deps for installing poetry
@@ -64,14 +64,14 @@ COPY poetry.lock pyproject.toml ./
 
 # install runtime deps - uses $POETRY_VIRTUALENVS_IN_PROJECT internally
 RUN --mount=type=cache,target=/root/.cache \
-    poetry install --with dagster,mlflow
+    poetry install --without dev
 
 
 ################################
 # PRODUCTION
 # Final image used for runtime
 ################################
-FROM python-base as production
+FROM python-base AS production
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
 RUN apt-get update && apt-get install -y git

@@ -6,11 +6,11 @@
 # PYTHON-BASE
 # Sets up all our shared environment variables
 ################################
-FROM --platform=$TARGETPLATFORM python:3.11-slim as python-base
+FROM --platform=$TARGETPLATFORM python:3.11-slim AS python-base
 
 ARG TARGETPLATFORM
 
-    # python
+# python
 ENV PYTHONUNBUFFERED=1 \
     # prevents python creating .pyc files
     PYTHONDONTWRITEBYTECODE=1 \
@@ -44,13 +44,13 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 # BUILDER-BASE
 # Used to build deps + create our virtual environment
 ################################
-FROM python-base as builder-base
+FROM python-base AS builder-base
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
-        # deps for installing poetry
-        curl \
-        # deps for building python deps
-        build-essential
+    # deps for installing poetry
+    curl \
+    # deps for building python deps
+    build-essential
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
 # The --mount will mount the buildx cache directory to where
@@ -77,7 +77,7 @@ RUN --mount=type=cache,target=/root/.cache \
 # PRODUCTION
 # Final image used for runtime
 ################################
-FROM python-base as production
+FROM python-base AS production
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
 RUN mkdir -p /opt/dagster/dagster_home /opt/dagster/app

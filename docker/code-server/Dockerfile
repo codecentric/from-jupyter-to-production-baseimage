@@ -6,11 +6,11 @@
 # PYTHON-BASE
 # Sets up all our shared environment variables
 ################################
-FROM --platform=$TARGETPLATFORM linuxserver/code-server:latest as python-base
+FROM --platform=$TARGETPLATFORM linuxserver/code-server:latest AS python-base
 
 ARG TARGETPLATFORM
 
-    # python
+# python
 ENV PYTHONUNBUFFERED=1 \
     # prevents python creating .pyc files
     PYTHONDONTWRITEBYTECODE=1 \
@@ -29,11 +29,11 @@ ENV PYTHONUNBUFFERED=1 \
 # BUILDER-BASE
 # Used to build deps + create our virtual environment
 ################################
-FROM python-base as builder-base
+FROM python-base AS builder-base
 RUN apt-get update && \
     apt-get install -y curl bash-completion \
-                        software-properties-common \
-                        build-essential && \
+    software-properties-common \
+    build-essential && \
     add-apt-repository ppa:deadsnakes/ppa && \
     apt-get update && \
     apt-get install -y python3.12 python3.12-venv python3.12-dev && \

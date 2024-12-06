@@ -13,10 +13,8 @@ jupyterlab-lsp = "^5"
 pandas = ">=2"
 scikit-learn = ">=1.5" #FIXME new version
 
-
 [tool.poetry.group.dvc.dependencies]
 dvc = ">=3.22"
-
 
 [tool.poetry.group.dagster.dependencies]
 dagster = "^1.8.0"
@@ -26,12 +24,10 @@ dagster-webserver = "^1.8.7"
 jupytext = "^1.15.2"
 xgboost = "^2.0.3"
 
-
 [tool.poetry.group.mlflow.dependencies]
 mlflow = ">=2.7"
 psycopg2-binary = "^2.9.10"
 pymysql = "^1.1.1"
-
 
 [tool.poetry.group.onnx.dependencies]
 fastapi = {version = "^0.115.6", extras = ["standard"]}
@@ -41,7 +37,6 @@ skl2onnx = "^1.17.0"
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"
 black = "^24.3.0"
-
 
 [build-system]
 requires = ["poetry-core"]
