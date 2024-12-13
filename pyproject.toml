@@ -27,7 +27,7 @@ xgboost = "^2.0.3"
 [tool.poetry.group.mlflow.dependencies]
 mlflow = ">=2.7"
 psycopg2-binary = "^2.9.10"
-pymysql = "^1.1.1"
+pymysql = {version = "^1.1.1", extras = ["rsa"]}
 
 [tool.poetry.group.onnx.dependencies]
 fastapi = {version = "^0.115.6", extras = ["standard"]}

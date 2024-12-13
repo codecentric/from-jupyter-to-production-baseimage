@@ -5077,6 +5077,9 @@ files = [
     {file = "pymysql-1.1.1.tar.gz", hash = "sha256:e127611aaf2b417403c60bf4dc570124aeb4a57f5f37b8e95ae399a42f904cd0"},
 ]
 
+[package.dependencies]
+cryptography = {version = "*", optional = true, markers = "extra == \"rsa\""}
+
 [package.extras]
 ed25519 = ["PyNaCl (>=1.4.0)"]
 rsa = ["cryptography"]
@@ -7085,4 +7088,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11, <3.13"
-content-hash = "4fd60ea0fe28b0ee185eceda2280d83fd255edf7d4ed71bac13bf73019673f9c"
+content-hash = "2c0a29835232ad13c95392ce81428be04497bc050e8b7c5cd7b206411d521270"

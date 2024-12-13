@@ -13,3 +13,4 @@ repos:
     rev: "1.8.4"
     hooks:
       - id: poetry-lock
+        args: ["--no-update"]
