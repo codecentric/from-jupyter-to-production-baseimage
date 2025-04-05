@@ -30,6 +30,8 @@ ENV PYTHONUNBUFFERED=1 \
 # Used to build deps + create our virtual environment
 ################################
 FROM python-base AS builder-base
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
 RUN apt-get update && \
     apt-get install -y curl bash-completion \
     software-properties-common \
@@ -40,19 +42,10 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-ENV PATH="/root/.rye/bin:$PATH"
-ENV RYE_INSTALL_OPTION="--yes"
-ENV SHELL="/bin/bash"
-
-
-# Download and install rye with proper link
-RUN curl -sSf https://rye.astral.sh/get | bash
-
-# Source rye environment
-RUN echo 'source $HOME/.rye/env' >> /root/.profile
-RUN echo 'source "$HOME/.rye/env"' >> ~/.bashrc
+RUN curl -fsSL https://get.docker.com | sh
 
 # Expose the port used by code-server
 EXPOSE 8443
+
 
 RUN /app/code-server/bin/code-server --install-extension ms-python.python
