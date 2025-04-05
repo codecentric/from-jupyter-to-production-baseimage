@@ -36,7 +36,7 @@ runs:
       uses: docker/setup-buildx-action@v1
 
     - name: Cache Docker layers 💾
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: /tmp/.buildx-cache
         key: ${{ inputs.runner_os }}-buildx-${{ inputs.github_sha }}
