@@ -1,0 +1,36 @@
+[project]
+name = "titanicsurvivors"
+version = "0.1.0"
+description = "Example project for the creation of a machine learning platform with ZenML.This project creates a model to predict would survive the titanic disaster."
+requires-python = ">=3.12"
+dependencies = [
+    "numpy<2.0",
+    "pandas>=2.2.3",
+    "pyarrow>=19.0.1",
+    "python-dotenv>=1.1.0",
+    "xgboost>=3.0.0",
+    "zenml>=0.80.1",
+]
+
+[project.optional-dependencies]
+k8s = [
+    "kubernetes>=32.0.1",
+]
+azure = [
+    "adlfs>=2024.12.0",
+    "azure-identity>=1.21.0",
+    "azure-keyvault-keys>=4.10.0",
+    "azure-keyvault-secrets>=4.9.0",
+    "azure-mgmt-containerservice>=20.0.0",
+    "azure-storage-blob>=12.17.0",
+    "azureml-core>=1.56.0",
+    "azure-ai-ml>=1.23.1"
+]
+mlflow = [
+    "mlflow>=2.21.3",
+    "pydantic>=2.8.2",
+    "python-rapidjson>=1.20",
+]
+bento = [
+    "bentoml>=1.4.7",
+]
