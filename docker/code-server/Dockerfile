@@ -1,51 +1,54 @@
-# syntax=docker/dockerfile:1
-
-# Based on https://gist.githubusercontent.com/usr-ein/c42d98abca3cb4632ab0c2c6aff8c88a/raw/19dcc899f68d0b08c2c137d3fd01715b0c84bac9/Dockerfile
-
-################################
-# PYTHON-BASE
-# Sets up all our shared environment variables
-################################
-FROM --platform=$TARGETPLATFORM linuxserver/code-server:latest AS python-base
-
-ARG TARGETPLATFORM
-
-# python
-ENV PYTHONUNBUFFERED=1 \
-    # prevents python creating .pyc files
-    PYTHONDONTWRITEBYTECODE=1 \
-    \
-    # pip
-    PIP_DISABLE_PIP_VERSION_CHECK=on \
-    PIP_DEFAULT_TIMEOUT=100 \
-    \
-    # paths
-    # this is where our requirements + virtual environment will live
-    PYSETUP_PATH="/opt/pysetup" \
-    VENV_PATH="/opt/pysetup/.venv"
-
-
-################################
-# BUILDER-BASE
-# Used to build deps + create our virtual environment
-################################
-FROM python-base AS builder-base
+# Start from the linuxserver/code-server image.
+FROM --platform=$TARGETPLATFORM linuxserver/code-server:latest
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
+ENV PUID=0
+ENV PGID=0
+ENV DEFAULT_WORKSPACE=/workspace
+
+# Switch to root to install additional packages.
+USER root
+
+# Install Docker engine (docker.io).
 RUN apt-get update && \
-    apt-get install -y curl bash-completion \
-    software-properties-common \
-    build-essential && \
-    add-apt-repository ppa:deadsnakes/ppa && \
-    apt-get update && \
-    apt-get install -y python3.12 python3.12-venv python3.12-dev && \
-    apt-get clean && \
+    apt-get install -y docker.io \
+    build-essential \
+    gcc \
+    g++ \
+    clang \
+    make \
+    meson \
+    ninja-build && \
+    apt-get clean &&\
     rm -rf /var/lib/apt/lists/*
 
-RUN curl -fsSL https://get.docker.com | sh
+# Create the Docker daemon socket directory, if needed.
+RUN mkdir -p /var/run
 
-# Expose the port used by code-server
+# Expose only the code-server port (adjust based on your configuration).
 EXPOSE 8443
 
+# Copy the custom entrypoint script.
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
-RUN /app/code-server/bin/code-server --install-extension ms-python.python
+SHELL ["/bin/bash", "-c"]
+WORKDIR /workspace
+ENV PATH="/app/code-server/bin:${PATH}"
+
+RUN code-server --install-extension ms-python.python
+
+
+ADD pyproject.toml .
+ADD settings.json .vscode/settings.json
+
+RUN uv venv .venv
+RUN source .venv/bin/activate
+RUN uv sync --active
+
+
+# Use our entrypoint script to launch Docker daemon and then code-server.
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+# The default command provided by linuxserver initiates code-server.
+CMD ["/init"]

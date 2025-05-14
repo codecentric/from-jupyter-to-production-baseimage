@@ -1,0 +1,6 @@
+{
+  "defaultInterpreterPath": "${workspaceFolder}/.venv",
+  "envFile": "${workspaceFolder}/.env",
+  "terminal.activateEnvironment": true
+
+}
