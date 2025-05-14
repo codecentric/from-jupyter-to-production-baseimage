@@ -44,7 +44,7 @@ ADD settings.json .vscode/settings.json
 
 RUN uv venv .venv
 RUN source .venv/bin/activate
-RUN uv sync --active
+RUN uv sync --active --all-extras
 
 
 # Use our entrypoint script to launch Docker daemon and then code-server.
