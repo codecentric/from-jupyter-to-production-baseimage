@@ -11,21 +11,21 @@ jupyterlab = "^4"
 jupyterlab-code-formatter = "^3"
 jupyterlab-lsp = "^5"
 pandas = ">=2"
-scikit-learn = ">=1.5" #FIXME new version
+scikit-learn = ">=1.5"
 
 [tool.poetry.group.dvc.dependencies]
 dvc = ">=3.22"
 
 [tool.poetry.group.dagster.dependencies]
 dagster = "^1.8.0"
-dagster-mlflow = "^0.24.7"
-dagster-postgres = "^0.24.7"
+dagster-mlflow = "^0.28.0"
+dagster-postgres = "^0.28.0"
 dagster-webserver = "^1.8.7"
 jupytext = "^1.15.2"
-xgboost = "^2.0.3"
+xgboost = "^3.0"
 
 [tool.poetry.group.mlflow.dependencies]
-mlflow = {version=">=2.7", extras=["extras"]}
+mlflow = ">=2.7"
 psycopg2-binary = "^2.9.10"
 pymysql = {version = "^1.1.1", extras = ["rsa"]}
 
@@ -35,8 +35,8 @@ onnxruntime = "^1.20"
 skl2onnx = "^1.17.0"
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "^3.5.0"
-black = "^24.3.0"
+pre-commit = "^4.0"
+black = "^26.0"
 
 [build-system]
 requires = ["poetry-core"]
