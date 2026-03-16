@@ -5,6 +5,13 @@ resolution-markers = [
     "python_full_version >= '3.12'",
     "python_full_version < '3.12'",
 ]
+conflicts = [[
+    { package = "workshop", group = "dagster" },
+    { package = "workshop", group = "dagster-jupyter" },
+], [
+    { package = "workshop", group = "dagster" },
+    { package = "workshop", group = "dvc" },
+]]
 
 [[package]]
 name = "adal"
@@ -154,7 +161,24 @@ wheels = [
 name = "antlr4-python3-runtime"
 version = "4.9.3"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.12'",
+    "python_full_version < '3.12'",
+]
 sdist = { url = "https://files.pythonhosted.org/packages/3e/38/7859ff46355f76f8d19459005ca000b6e7012f2f1ca597746cbcd1fbfe5e/antlr4-python3-runtime-4.9.3.tar.gz", hash = "sha256:f224469b4168294902bb1efa80a8bf7855f24c99aef99cbefc1bcd3cce77881b", size = 117034, upload-time = "2021-11-06T17:52:23.524Z" }
+
+[[package]]
+name = "antlr4-python3-runtime"
+version = "4.13.2"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.12'",
+    "python_full_version < '3.12'",
+]
+sdist = { url = "https://files.pythonhosted.org/packages/33/5f/2cdf6f7aca3b20d3f316e9f505292e1f256a32089bd702034c29ebde6242/antlr4_python3_runtime-4.13.2.tar.gz", hash = "sha256:909b647e1d2fc2b70180ac586df3933e38919c85f98ccc656a96cd3f25ef3916", size = 117467, upload-time = "2024-08-03T19:00:12.757Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/89/03/a851e84fcbb85214dc637b6378121ef9a0dd61b4c65264675d8a5c9b1ae7/antlr4_python3_runtime-4.13.2-py3-none-any.whl", hash = "sha256:fe3835eb8d33daece0e799090eda89719dbccee7aa39ef94eed3818cafa5a7e8", size = 144462, upload-time = "2024-08-03T19:00:11.134Z" },
+]
 
 [[package]]
 name = "anyio"
@@ -664,7 +688,7 @@ name = "cffi"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pycparser", marker = "implementation_name != 'PyPy'" },
+    { name = "pycparser", marker = "implementation_name != 'PyPy' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/eb/56/b1ba7935a17738ae8453301356628e8147c79dbb825bcbc73dc7401f9846/cffi-2.0.0.tar.gz", hash = "sha256:44d1b5909021139fe36001ae048dbdde8214afa20200eda0f64c068cac5d5529", size = 523588, upload-time = "2025-09-08T23:24:04.541Z" }
 wheels = [
@@ -750,7 +774,7 @@ name = "click"
 version = "8.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32'" },
+    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/3d/fa/656b739db8587d7b5dfa22e22ed02566950fbfbcdc20311993483657a5c0/click-8.3.1.tar.gz", hash = "sha256:12ff4785d337a1bb490bb7e9c2b1ee5da3112e94a8622f26a6c77f5d2fc6842a", size = 295065, upload-time = "2025-11-15T20:45:42.706Z" }
 wheels = [
@@ -907,7 +931,7 @@ name = "cryptography"
 version = "46.0.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "platform_python_implementation != 'PyPy'" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/60/04/ee2a9e8542e4fa2773b81771ff8349ff19cdd56b7258a0cc442639052edb/cryptography-46.0.5.tar.gz", hash = "sha256:abace499247268e3757271b2f1e244b36b06f8515cf27c4d49468fc9eb16e93d", size = 750064, upload-time = "2026-02-10T19:18:38.255Z" }
 wheels = [
@@ -960,12 +984,16 @@ wheels = [
 name = "dagster"
 version = "1.9.2"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.12'",
+    "python_full_version < '3.12'",
+]
 dependencies = [
     { name = "alembic" },
     { name = "click" },
     { name = "coloredlogs" },
     { name = "croniter" },
-    { name = "dagster-pipes" },
+    { name = "dagster-pipes", version = "1.9.2", source = { registry = "https://pypi.org/simple" } },
     { name = "docstring-parser" },
     { name = "filelock" },
     { name = "grpcio" },
@@ -999,27 +1027,75 @@ wheels = [
 ]
 
 [[package]]
+name = "dagster"
+version = "1.12.19"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.12'",
+    "python_full_version < '3.12'",
+]
+dependencies = [
+    { name = "alembic" },
+    { name = "antlr4-python3-runtime", version = "4.13.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "click" },
+    { name = "coloredlogs" },
+    { name = "dagster-pipes", version = "1.12.19", source = { registry = "https://pypi.org/simple" } },
+    { name = "dagster-shared" },
+    { name = "docstring-parser" },
+    { name = "filelock" },
+    { name = "grpcio" },
+    { name = "grpcio-health-checking" },
+    { name = "jinja2" },
+    { name = "protobuf" },
+    { name = "psutil", marker = "sys_platform == 'win32'" },
+    { name = "python-dotenv" },
+    { name = "pytz" },
+    { name = "pywin32", marker = "sys_platform == 'win32'" },
+    { name = "requests" },
+    { name = "rich" },
+    { name = "setuptools" },
+    { name = "six" },
+    { name = "sqlalchemy" },
+    { name = "structlog" },
+    { name = "tabulate" },
+    { name = "tomli" },
+    { name = "toposort" },
+    { name = "tqdm" },
+    { name = "tzdata" },
+    { name = "universal-pathlib" },
+    { name = "watchdog" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/67/12/0434fe4aa17a417d4feaaab34a149ae598a113cf669b63a2596fbef4e395/dagster-1.12.19.tar.gz", hash = "sha256:b24c2fa06e5fe6198e40cee091714af2ffa931ae42f507eaf2733ded5848c051", size = 3136271, upload-time = "2026-03-12T17:25:47.546Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/09/5c/a18158f5fca20b79dd37e532c66f6893d25485dc427cb97c44849f651759/dagster-1.12.19-py3-none-any.whl", hash = "sha256:1d1c8646fc62c37ff9591d22a6f4ff15c84a4083c432cd19016216e360c9cc4b", size = 1955248, upload-time = "2026-03-12T17:25:44.813Z" },
+]
+
+[[package]]
 name = "dagster-graphql"
-version = "1.9.2"
+version = "1.12.19"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "dagster" },
-    { name = "gql", extra = ["requests"] },
+    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" } },
+    { name = "gql", extra = ["requests"], marker = "extra == 'group-8-workshop-dagster'" },
     { name = "graphene" },
     { name = "requests" },
     { name = "starlette" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/03/24/03aaa6b53be6eacae45cd4c0335ab6338f44554f47befd5432d5ebe6e131/dagster-graphql-1.9.2.tar.gz", hash = "sha256:23d824ca8cdf411607dedbad68e81e19a28cb498cbc1ea8ec9ee48c5fbd479e1", size = 145662, upload-time = "2024-11-14T20:22:58.681Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/fa/8d/be28eccf881d6487317b1a8669dbed2314df1412cb58da267bbecb9e7d21/dagster_graphql-1.12.19.tar.gz", hash = "sha256:223857babe9a6460f363cdf87eb13d6ebac5583fed53af4e0ecd04b0ffabf6f1", size = 464322, upload-time = "2026-03-12T17:26:13.352Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/67/ce/e8e3b3b222685bc036c60fb3f22f019c003375f530f7ba02d0f1002d4a27/dagster_graphql-1.9.2-py3-none-any.whl", hash = "sha256:22388d13c257166759ef161b8e15f65a101a8a2f59c606b056703418349af5fa", size = 191057, upload-time = "2024-11-14T20:22:56.299Z" },
+    { url = "https://files.pythonhosted.org/packages/57/9e/c0b7653a91c45aedf3da8e32a3573f05de0be86c457f794c78a676baab9d/dagster_graphql-1.12.19-py3-none-any.whl", hash = "sha256:dfe82ced46c468fad63fb863922a88dbbe54703db7c3af7a164426c084c73c96", size = 212493, upload-time = "2026-03-12T17:26:11.548Z" },
 ]
 
 [[package]]
 name = "dagster-mlflow"
 version = "0.25.2"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.12'",
+    "python_full_version < '3.12'",
+]
 dependencies = [
-    { name = "dagster" },
+    { name = "dagster", version = "1.9.2", source = { registry = "https://pypi.org/simple" } },
     { name = "mlflow" },
     { name = "pandas" },
 ]
@@ -1029,20 +1105,60 @@ wheels = [
 ]
 
 [[package]]
+name = "dagster-mlflow"
+version = "0.28.19"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.12'",
+    "python_full_version < '3.12'",
+]
+dependencies = [
+    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" } },
+    { name = "mlflow" },
+    { name = "pandas" },
+    { name = "protobuf" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9d/5d/5507c7f39ed0ba53089dd0df0cbfc6584d3f8ff59088aa81ff3546fde157/dagster_mlflow-0.28.19.tar.gz", hash = "sha256:2041a7831fd7baae6b20cb03995f50a87f1989fed6310bbfb6bbeea668b673ca", size = 14286, upload-time = "2026-03-12T17:34:26.367Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a5/08/29876857ab21f49f12431cab92c1517c7f0da254fa1ef394a62025818284/dagster_mlflow-0.28.19-py3-none-any.whl", hash = "sha256:f587f354d15785b4a54904cbfa0d3602499e7ee8952370b84ae9f510f72a3f38", size = 10592, upload-time = "2026-03-12T17:34:25.062Z" },
+]
+
+[[package]]
 name = "dagster-pipes"
 version = "1.9.2"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.12'",
+    "python_full_version < '3.12'",
+]
 sdist = { url = "https://files.pythonhosted.org/packages/a6/1b/420f4111d993564484abad776a9edb6a0398decb0a5e01d7e875cd8d52e1/dagster-pipes-1.9.2.tar.gz", hash = "sha256:63c64123b3826c099d2b9fe09604c3d755fcfaeaf08d0920628c54cba5123e47", size = 17725, upload-time = "2024-11-14T20:22:52.757Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f0/ba/46ad619c4cb985b600575d4321d3275963664a131e6570e351d5b8bfa4f9/dagster_pipes-1.9.2-py3-none-any.whl", hash = "sha256:3e18a82617e7287450d740bab0dbae4d8210c9e1b08c33cc395550eb58206007", size = 17549, upload-time = "2024-11-14T20:22:51.482Z" },
 ]
 
 [[package]]
+name = "dagster-pipes"
+version = "1.12.19"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.12'",
+    "python_full_version < '3.12'",
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7f/8f/ee47f5034140f465a6b8564dbbdc598d46fc48fc455372138829cfa8df01/dagster_pipes-1.12.19.tar.gz", hash = "sha256:4c71dd9105a3641d19a2f7cd6526e2ca381f71c8616410d2023028551450a138", size = 23397, upload-time = "2026-03-12T17:26:04.451Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5b/1c/f3e64e984dd3a9d0a2f2cb78a3bba6d2a025d392c2d926b218bf2690fbf9/dagster_pipes-1.12.19-py3-none-any.whl", hash = "sha256:2aace16e33a41a23cdfc58a594116925e974c211378b59841a141c15da9295b2", size = 20538, upload-time = "2026-03-12T17:26:03.313Z" },
+]
+
+[[package]]
 name = "dagster-postgres"
 version = "0.25.2"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.12'",
+    "python_full_version < '3.12'",
+]
 dependencies = [
-    { name = "dagster" },
+    { name = "dagster", version = "1.9.2", source = { registry = "https://pypi.org/simple" } },
     { name = "psycopg2-binary" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e1/2e/0e3f4ed6f6182cb903d6afa53be57aaa270ce901f3c4e46149f25390b4fe/dagster-postgres-0.25.2.tar.gz", hash = "sha256:b8b076b7c2c8b94c6b0f971ec9cb586448fe8605f7e819cb1adb6cf333ee583a", size = 15299, upload-time = "2024-11-14T20:32:26.797Z" }
@@ -1051,19 +1167,53 @@ wheels = [
 ]
 
 [[package]]
+name = "dagster-postgres"
+version = "0.28.19"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.12'",
+    "python_full_version < '3.12'",
+]
+dependencies = [
+    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" } },
+    { name = "psycopg2-binary" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/8d/57/7c45652d5a77641475b04c30b1acf746259d072e587d5453406e5de49012/dagster_postgres-0.28.19.tar.gz", hash = "sha256:f4329fa13d8a1d37137f92b933bced51efe63655c895d346b5d43c81647d2808", size = 280136, upload-time = "2026-03-12T17:36:56.862Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/60/af/d39820d5686e3144b03f06af68b733551ef4d924f432ba77796815ee386c/dagster_postgres-0.28.19-py3-none-any.whl", hash = "sha256:0b464f0a47f5dbfd923788188c2a660b22b7421a7654d43d8c7a7fb474080807", size = 22380, upload-time = "2026-03-12T17:36:55.794Z" },
+]
+
+[[package]]
+name = "dagster-shared"
+version = "1.12.19"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "packaging" },
+    { name = "platformdirs" },
+    { name = "pydantic" },
+    { name = "pyyaml" },
+    { name = "tomlkit" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/93/94/84ad200a145761f0909200c213e1d9fe67c3bd95b36c400bffab73f5d2ed/dagster_shared-1.12.19.tar.gz", hash = "sha256:e49f98a9bd3ab989c0514087c7e6586e7b4ed85577d69efff1379ae134a01e17", size = 92774, upload-time = "2026-03-12T17:32:48.066Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/93/6b/ee45f14db1d3d2b0ef2e05b468e47e72aa8ad66908318c50a9f5278852ed/dagster_shared-1.12.19-py3-none-any.whl", hash = "sha256:707c0bc6e3a912db463e3a0fbc096424f9e6cd52a4f98866abe11a7bba873ff5", size = 91469, upload-time = "2026-03-12T17:32:47.024Z" },
+]
+
+[[package]]
 name = "dagster-webserver"
-version = "1.9.2"
+version = "1.12.19"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
-    { name = "dagster" },
+    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" } },
     { name = "dagster-graphql" },
     { name = "starlette" },
-    { name = "uvicorn", extra = ["standard"] },
+    { name = "uvicorn", extra = ["standard"], marker = "extra == 'group-8-workshop-dagster'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e3/d4/a309e90d79a9c1de84a604b2a5dc03d8d832ef18e80a217b65028dd64bfc/dagster-webserver-1.9.2.tar.gz", hash = "sha256:34d3252c571c3ed7024dda6684f89dae672b35b820098b490f186100fffcf3b9", size = 12352871, upload-time = "2024-11-14T20:28:18.542Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b3/1d/316f139905aeaa37ec97f33bfa394f102bd3528224238e9fa47a69c666ed/dagster_webserver-1.12.19.tar.gz", hash = "sha256:89e04cf3cf98039108b4b86b60c8d84925f91c586decdc1723eb776399aff36f", size = 11926783, upload-time = "2026-03-12T17:31:34.486Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b9/d4/0aac9f392d05b4b73d58c1942a7df2f15212befa20111bcae14b4a8e29c1/dagster_webserver-1.9.2-py3-none-any.whl", hash = "sha256:7d8346aa99b96a2e40da79a22e7851898e1dc7ed430002cfd5015d4f2906a2ac", size = 12678889, upload-time = "2024-11-14T20:28:15.056Z" },
+    { url = "https://files.pythonhosted.org/packages/2a/06/eb62d6d95a9bb69118f2207d59bcae7915fae955b7e41656d07726007d0b/dagster_webserver-1.12.19-py3-none-any.whl", hash = "sha256:d5ddcfbe138bece2cc51e88f7922d06edb45bde12a2aca4e33bae8d576f0ddad", size = 12269566, upload-time = "2026-03-12T17:31:32.232Z" },
 ]
 
 [[package]]
@@ -1165,7 +1315,7 @@ name = "docker"
 version = "7.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pywin32", marker = "sys_platform == 'win32'" },
+    { name = "pywin32", marker = "sys_platform == 'win32' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
     { name = "requests" },
     { name = "urllib3" },
 ]
@@ -1304,7 +1454,7 @@ version = "2.32.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp-retry" },
-    { name = "fsspec", extra = ["http"] },
+    { name = "fsspec", extra = ["http"], marker = "(extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra != 'group-8-workshop-dagster-jupyter' and extra == 'group-8-workshop-dvc') or (extra != 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/33/e6/4fb38ab911a9d90fbe2c7759c430814fe2253760304a9de0d3ebd6e27c20/dvc-http-2.32.0.tar.gz", hash = "sha256:f714f8435634aab943c625f659ddac1188c6ddaf3ff161b39715b83ff39637fc", size = 14603, upload-time = "2023-12-13T10:53:16.393Z" }
 wheels = [
@@ -2074,7 +2224,7 @@ name = "hydra-core"
 version = "1.3.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "antlr4-python3-runtime" },
+    { name = "antlr4-python3-runtime", version = "4.9.3", source = { registry = "https://pypi.org/simple" } },
     { name = "omegaconf" },
     { name = "packaging" },
 ]
@@ -2127,11 +2277,11 @@ name = "ipykernel"
 version = "7.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "appnope", marker = "sys_platform == 'darwin'" },
+    { name = "appnope", marker = "sys_platform == 'darwin' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
     { name = "comm" },
     { name = "debugpy" },
-    { name = "ipython", version = "9.10.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
-    { name = "ipython", version = "9.11.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "ipython", version = "9.10.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "ipython", version = "9.11.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
     { name = "jupyter-client" },
     { name = "jupyter-core" },
     { name = "matplotlib-inline" },
@@ -2155,17 +2305,17 @@ resolution-markers = [
     "python_full_version < '3.12'",
 ]
 dependencies = [
-    { name = "colorama", marker = "python_full_version < '3.12' and sys_platform == 'win32'" },
-    { name = "decorator", marker = "python_full_version < '3.12'" },
-    { name = "ipython-pygments-lexers", marker = "python_full_version < '3.12'" },
-    { name = "jedi", marker = "python_full_version < '3.12'" },
-    { name = "matplotlib-inline", marker = "python_full_version < '3.12'" },
-    { name = "pexpect", marker = "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'" },
-    { name = "prompt-toolkit", marker = "python_full_version < '3.12'" },
-    { name = "pygments", marker = "python_full_version < '3.12'" },
-    { name = "stack-data", marker = "python_full_version < '3.12'" },
-    { name = "traitlets", marker = "python_full_version < '3.12'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.12'" },
+    { name = "colorama", marker = "(python_full_version < '3.12' and sys_platform == 'win32') or (python_full_version >= '3.12' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (python_full_version >= '3.12' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc') or (sys_platform != 'win32' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (sys_platform != 'win32' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "decorator", marker = "python_full_version < '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "ipython-pygments-lexers", marker = "python_full_version < '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "jedi", marker = "python_full_version < '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "matplotlib-inline", marker = "python_full_version < '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "pexpect", marker = "(python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32') or (python_full_version >= '3.12' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (python_full_version >= '3.12' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc') or (sys_platform == 'emscripten' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (sys_platform == 'emscripten' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc') or (sys_platform == 'win32' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (sys_platform == 'win32' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "prompt-toolkit", marker = "python_full_version < '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "pygments", marker = "python_full_version < '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "stack-data", marker = "python_full_version < '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "traitlets", marker = "python_full_version < '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "typing-extensions", marker = "python_full_version < '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a6/60/2111715ea11f39b1535bed6024b7dec7918b71e5e5d30855a5b503056b50/ipython-9.10.0.tar.gz", hash = "sha256:cd9e656be97618a0676d058134cd44e6dc7012c0e5cb36a9ce96a8c904adaf77", size = 4426526, upload-time = "2026-02-02T10:00:33.594Z" }
 wheels = [
@@ -2180,16 +2330,16 @@ resolution-markers = [
     "python_full_version >= '3.12'",
 ]
 dependencies = [
-    { name = "colorama", marker = "python_full_version >= '3.12' and sys_platform == 'win32'" },
-    { name = "decorator", marker = "python_full_version >= '3.12'" },
-    { name = "ipython-pygments-lexers", marker = "python_full_version >= '3.12'" },
-    { name = "jedi", marker = "python_full_version >= '3.12'" },
-    { name = "matplotlib-inline", marker = "python_full_version >= '3.12'" },
-    { name = "pexpect", marker = "python_full_version >= '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'" },
-    { name = "prompt-toolkit", marker = "python_full_version >= '3.12'" },
-    { name = "pygments", marker = "python_full_version >= '3.12'" },
-    { name = "stack-data", marker = "python_full_version >= '3.12'" },
-    { name = "traitlets", marker = "python_full_version >= '3.12'" },
+    { name = "colorama", marker = "(python_full_version >= '3.12' and sys_platform == 'win32') or (python_full_version < '3.12' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (python_full_version < '3.12' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc') or (sys_platform != 'win32' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (sys_platform != 'win32' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "decorator", marker = "python_full_version >= '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "ipython-pygments-lexers", marker = "python_full_version >= '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "jedi", marker = "python_full_version >= '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "matplotlib-inline", marker = "python_full_version >= '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "pexpect", marker = "(python_full_version >= '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32') or (python_full_version < '3.12' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (python_full_version < '3.12' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc') or (sys_platform == 'emscripten' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (sys_platform == 'emscripten' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc') or (sys_platform == 'win32' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (sys_platform == 'win32' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "prompt-toolkit", marker = "python_full_version >= '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "pygments", marker = "python_full_version >= '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "stack-data", marker = "python_full_version >= '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "traitlets", marker = "python_full_version >= '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/86/28/a4698eda5a8928a45d6b693578b135b753e14fa1c2b36ee9441e69a45576/ipython-9.11.0.tar.gz", hash = "sha256:2a94bc4406b22ecc7e4cb95b98450f3ea493a76bec8896cda11b78d7752a6667", size = 4427354, upload-time = "2026-03-05T08:57:30.549Z" }
 wheels = [
@@ -2445,10 +2595,10 @@ dependencies = [
     { name = "jupyter-server-terminals" },
     { name = "nbconvert" },
     { name = "nbformat" },
-    { name = "overrides", marker = "python_full_version < '3.12'" },
+    { name = "overrides", marker = "python_full_version < '3.12' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
     { name = "packaging" },
     { name = "prometheus-client" },
-    { name = "pywinpty", marker = "os_name == 'nt'" },
+    { name = "pywinpty", marker = "os_name == 'nt' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
     { name = "pyzmq" },
     { name = "send2trash" },
     { name = "terminado" },
@@ -2466,7 +2616,7 @@ name = "jupyter-server-terminals"
 version = "0.5.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pywinpty", marker = "os_name == 'nt'" },
+    { name = "pywinpty", marker = "os_name == 'nt' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
     { name = "terminado" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f4/a7/bcd0a9b0cbba88986fe944aaaf91bfda603e5a50bda8ed15123f381a3b2f/jupyter_server_terminals-0.5.4.tar.gz", hash = "sha256:bbda128ed41d0be9020349f9f1f2a4ab9952a73ed5f5ac9f1419794761fb87f5", size = 31770, upload-time = "2026-01-14T16:53:20.213Z" }
@@ -2814,7 +2964,7 @@ dependencies = [
     { name = "flask" },
     { name = "flask-cors" },
     { name = "graphene" },
-    { name = "gunicorn", marker = "sys_platform != 'win32'" },
+    { name = "gunicorn", marker = "sys_platform != 'win32' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
     { name = "huey" },
     { name = "matplotlib" },
     { name = "mlflow-skinny" },
@@ -2826,7 +2976,7 @@ dependencies = [
     { name = "scipy" },
     { name = "skops" },
     { name = "sqlalchemy" },
-    { name = "waitress", marker = "sys_platform == 'win32'" },
+    { name = "waitress", marker = "sys_platform == 'win32' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/8b/94/a583069259500182c070db798118aee7877d37bd1981e49af5ae9113b100/mlflow-3.10.1.tar.gz", hash = "sha256:609509ccc15eb9c17861748e537cbffa57d2caf488ff3e30efed62951a6977cf", size = 9542009, upload-time = "2026-03-05T11:15:22.677Z" }
 wheels = [
@@ -3155,7 +3305,7 @@ name = "omegaconf"
 version = "2.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "antlr4-python3-runtime" },
+    { name = "antlr4-python3-runtime", version = "4.9.3", source = { registry = "https://pypi.org/simple" } },
     { name = "pyyaml" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/09/48/6388f1bb9da707110532cb70ec4d2822858ddfb44f1cdf1233c20a80ea4b/omegaconf-2.3.0.tar.gz", hash = "sha256:d5d4b6d29955cc50ad50c46dc269bcd92c6e00f5f90d23ab5fee7bfca4ba4cc7", size = 3298120, upload-time = "2022-12-08T20:59:22.753Z" }
@@ -3863,7 +4013,7 @@ name = "pynacl"
 version = "1.6.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "platform_python_implementation != 'PyPy'" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d9/9a/4019b524b03a13438637b11538c82781a5eda427394380381af8f04f467a/pynacl-1.6.2.tar.gz", hash = "sha256:018494d6d696ae03c7e656e5e74cdfd8ea1326962cc401bcf018f1ed8436811c", size = 3511692, upload-time = "2026-01-01T17:48:10.851Z" }
 wheels = [
@@ -4058,7 +4208,7 @@ name = "pyzmq"
 version = "27.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "implementation_name == 'pypy'" },
+    { name = "cffi", marker = "implementation_name == 'pypy' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/04/0b/3c9baedbdf613ecaa7aa07027780b8867f57b6293b6ee50de316c9f3222b/pyzmq-27.1.0.tar.gz", hash = "sha256:ac0765e3d44455adb6ddbf4417dcce460fc40a05978c08efdf2948072f6db540", size = 281750, upload-time = "2025-09-08T23:10:18.157Z" }
 wheels = [
@@ -4413,7 +4563,7 @@ dependencies = [
     { name = "aiohttp-retry" },
     { name = "asyncssh" },
     { name = "dulwich" },
-    { name = "fsspec", extra = ["tqdm"] },
+    { name = "fsspec", extra = ["tqdm"], marker = "(extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra != 'group-8-workshop-dagster-jupyter' and extra == 'group-8-workshop-dvc') or (extra != 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
     { name = "funcy", marker = "python_full_version < '3.12'" },
     { name = "gitpython" },
     { name = "pathspec" },
@@ -4567,7 +4717,7 @@ name = "sqlalchemy"
 version = "2.0.48"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "greenlet", marker = "platform_machine == 'AMD64' or platform_machine == 'WIN32' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'ppc64le' or platform_machine == 'win32' or platform_machine == 'x86_64'" },
+    { name = "greenlet", marker = "platform_machine == 'AMD64' or platform_machine == 'WIN32' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'ppc64le' or platform_machine == 'win32' or platform_machine == 'x86_64' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
     { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1f/73/b4a9737255583b5fa858e0bb8e116eb94b88c910164ed2ed719147bde3de/sqlalchemy-2.0.48.tar.gz", hash = "sha256:5ca74f37f3369b45e1f6b7b06afb182af1fd5dde009e4ffd831830d98cbe5fe7", size = 9886075, upload-time = "2026-03-02T15:28:51.474Z" }
@@ -4673,8 +4823,8 @@ name = "terminado"
 version = "0.18.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ptyprocess", marker = "os_name != 'nt'" },
-    { name = "pywinpty", marker = "os_name == 'nt'" },
+    { name = "ptyprocess", marker = "os_name != 'nt' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "pywinpty", marker = "os_name == 'nt' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
     { name = "tornado" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/8a/11/965c6fd8e5cc254f1fe142d547387da17a8ebfd75a3455f637c663fb38a0/terminado-0.18.1.tar.gz", hash = "sha256:de09f2c4b85de4765f7714688fff57d3e75bad1f909b589fde880460c753fd2e", size = 32701, upload-time = "2024-03-12T14:34:39.026Z" }
@@ -4891,11 +5041,11 @@ wheels = [
 
 [package.optional-dependencies]
 standard = [
-    { name = "colorama", marker = "sys_platform == 'win32'" },
+    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
     { name = "httptools" },
     { name = "python-dotenv" },
     { name = "pyyaml" },
-    { name = "uvloop", marker = "platform_python_implementation != 'PyPy' and sys_platform != 'cygwin' and sys_platform != 'win32'" },
+    { name = "uvloop", marker = "(platform_python_implementation != 'PyPy' and sys_platform != 'cygwin' and sys_platform != 'win32') or (platform_python_implementation == 'PyPy' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (platform_python_implementation == 'PyPy' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc') or (sys_platform == 'cygwin' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (sys_platform == 'cygwin' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc') or (sys_platform == 'win32' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (sys_platform == 'win32' and extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
     { name = "watchfiles" },
     { name = "websockets" },
 ]
@@ -5121,10 +5271,17 @@ dependencies = [
 
 [package.dev-dependencies]
 dagster = [
-    { name = "dagster" },
-    { name = "dagster-mlflow" },
-    { name = "dagster-postgres" },
+    { name = "antlr4-python3-runtime", version = "4.13.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" } },
+    { name = "dagster-mlflow", version = "0.28.19", source = { registry = "https://pypi.org/simple" } },
+    { name = "dagster-postgres", version = "0.28.19", source = { registry = "https://pypi.org/simple" } },
     { name = "dagster-webserver" },
+    { name = "xgboost" },
+]
+dagster-jupyter = [
+    { name = "dagster", version = "1.9.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "dagster-mlflow", version = "0.25.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "dagster-postgres", version = "0.25.2", source = { registry = "https://pypi.org/simple" } },
     { name = "jupytext" },
     { name = "xgboost" },
 ]
@@ -5158,10 +5315,17 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dagster = [
+    { name = "antlr4-python3-runtime", specifier = ">=4.13" },
+    { name = "dagster", specifier = ">=1.9.3" },
+    { name = "dagster-mlflow", specifier = ">=0.25.3" },
+    { name = "dagster-postgres", specifier = ">=0.25.3" },
+    { name = "dagster-webserver", specifier = ">=1.9.3" },
+    { name = "xgboost", specifier = ">=3.0,<4" },
+]
+dagster-jupyter = [
     { name = "dagster", specifier = ">=1.8.0,<1.9.3" },
     { name = "dagster-mlflow", specifier = ">=0.24.0,<0.26" },
     { name = "dagster-postgres", specifier = ">=0.24.0,<0.26" },
-    { name = "dagster-webserver", specifier = ">=1.8.0,<1.9.3" },
     { name = "jupytext", specifier = ">=1.15.2,<2" },
     { name = "xgboost", specifier = ">=3.0,<4" },
 ]

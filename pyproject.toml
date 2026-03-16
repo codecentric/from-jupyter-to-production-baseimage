@@ -13,12 +13,23 @@ dependencies = [
 
 [dependency-groups]
 dvc = ["dvc>=3.22", "pathspec<1.0.0"]
-dagster = [
+
+# Installed in jupyter container: dagster pinned <1.9.3 (compatible with antlr4 4.9.x = dvc-compatible)
+dagster-jupyter = [
     "dagster>=1.8.0,<1.9.3",
     "dagster-mlflow>=0.24.0,<0.26",
     "dagster-postgres>=0.24.0,<0.26",
-    "dagster-webserver>=1.8.0,<1.9.3",
     "jupytext>=1.15.2,<2",
+    "xgboost>=3.0,<4",
+]
+
+# Installed in dagster container: latest dagster with new UI (no antlr4 or dvc constraint)
+dagster = [
+    "antlr4-python3-runtime>=4.13",
+    "dagster>=1.9.3",
+    "dagster-mlflow>=0.25.3",
+    "dagster-postgres>=0.25.3",
+    "dagster-webserver>=1.9.3",
     "xgboost>=3.0,<4",
 ]
 mlflow = [
@@ -34,4 +45,10 @@ onnx = [
 dev = [
     "pre-commit>=4.0,<5",
     "black>=25,<26",
+]
+
+[tool.uv]
+conflicts = [
+    [{ group = "dagster" }, { group = "dagster-jupyter" }],
+    [{ group = "dagster" }, { group = "dvc" }],
 ]

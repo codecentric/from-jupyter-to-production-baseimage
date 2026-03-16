@@ -32,7 +32,7 @@ WORKDIR /opt/pysetup
 COPY uv.lock pyproject.toml ./
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --group dvc --group dagster --group mlflow --group onnx --no-dev
+    uv sync --frozen --group dvc --group dagster-jupyter --group mlflow --group onnx --no-dev
 
 
 ################################
