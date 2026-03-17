@@ -1,5 +1,5 @@
 # Start from the linuxserver/code-server image.
-FROM --platform=$TARGETPLATFORM linuxserver/code-server:latest
+FROM linuxserver/code-server:latest
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 ENV PUID=0
