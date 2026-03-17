@@ -49,6 +49,7 @@ COPY configs/jupytext.toml /root/.config/jupytext.toml
 
 WORKDIR /workshop
 EXPOSE 8888 4141
-ENV SHELL="/bin/bash"
+ENV SHELL="/bin/bash" \
+    PYTHONWARNINGS="ignore::UserWarning:pydantic"
 
 ENTRYPOINT ["jupyter", "lab"]
