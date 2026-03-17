@@ -5385,7 +5385,7 @@ dvc = [
     { name = "pathspec", specifier = "<1.0.0" },
 ]
 mlflow = [
-    { name = "mlflow", extras = ["extras"], specifier = ">=2.7" },
+    { name = "mlflow", extras = ["extras"], specifier = ">=3.0" },
     { name = "pip", specifier = ">=25" },
     { name = "psycopg2-binary", specifier = ">=2.9.10,<3" },
     { name = "pymysql", extras = ["rsa"], specifier = ">=1.1.1,<2" },
