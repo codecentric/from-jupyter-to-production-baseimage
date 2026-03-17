@@ -4,7 +4,7 @@
 # PYTHON-BASE
 # Sets up all our shared environment variables
 ################################
-FROM --platform=$TARGETPLATFORM python:3.11-slim AS python-base
+FROM python:3.11-slim AS python-base
 
 ARG TARGETPLATFORM
 
