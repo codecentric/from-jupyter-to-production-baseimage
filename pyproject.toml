@@ -1,43 +1,56 @@
-[tool.poetry]
+[project]
 name = "workshop"
 version = "24.12.05"
 description = "Baseimage used in the workshop 'from jupyter to production'"
-authors = ["codecentric"]
-package-mode = false
+requires-python = ">=3.11, <3.13"
+dependencies = [
+    "jupyterlab>=4,<5",
+    "jupyterlab-code-formatter>=3,<4",
+    "jupyterlab-lsp>=5,<6",
+    "ipywidgets>=8,<9",
+    "pandas>=2",
+    "scikit-learn>=1.5",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11, <3.13"
-jupyterlab = "^4"
-jupyterlab-code-formatter = "^3"
-jupyterlab-lsp = "^5"
-pandas = ">=2"
-scikit-learn = ">=1.5" #FIXME new version
+[dependency-groups]
+dvc = ["dvc>=3.22", "pathspec<1.0.0"]
 
-[tool.poetry.group.dvc.dependencies]
-dvc = ">=3.22"
+# Installed in jupyter container: dagster pinned <1.9.3 (compatible with antlr4 4.9.x = dvc-compatible)
+dagster-jupyter = [
+    "dagster>=1.8.0,<1.9.3",
+    "dagster-mlflow>=0.24.0,<0.26",
+    "dagster-postgres>=0.24.0,<0.26",
+    "jupytext>=1.15.2,<2",
+    "xgboost>=3.0,<4",
+]
 
-[tool.poetry.group.dagster.dependencies]
-dagster = "^1.8.0"
-dagster-mlflow = "^0.24.7"
-dagster-postgres = "^0.24.7"
-dagster-webserver = "^1.8.7"
-jupytext = "^1.15.2"
-xgboost = "^2.0.3"
+# Installed in dagster container: latest dagster with new UI (no antlr4 or dvc constraint)
+dagster = [
+    "antlr4-python3-runtime>=4.13",
+    "dagster>=1.9.3",
+    "dagster-mlflow>=0.25.3",
+    "dagster-postgres>=0.25.3",
+    "dagster-webserver>=1.9.3",
+    "xgboost>=3.0,<4",
+]
+mlflow = [
+    "pip>=25",
+    "mlflow[extras]>=2.7",
+    "psycopg2-binary>=2.9.10,<3",
+    "pymysql[rsa]>=1.1.1,<2",
+]
+onnx = [
+    "fastapi[standard]>=0.115.6,<0.116",
+    "onnxruntime>=1.20,<2",
+    "skl2onnx>=1.17.0,<2",
+]
+dev = [
+    "pre-commit>=4.0,<5",
+    "black>=25,<26",
+]
 
-[tool.poetry.group.mlflow.dependencies]
-mlflow = {version=">=2.7", extras=["extras"]}
-psycopg2-binary = "^2.9.10"
-pymysql = {version = "^1.1.1", extras = ["rsa"]}
-
-[tool.poetry.group.onnx.dependencies]
-fastapi = {version = "^0.115.6", extras = ["standard"]}
-onnxruntime = "^1.20"
-skl2onnx = "^1.17.0"
-
-[tool.poetry.group.dev.dependencies]
-pre-commit = "^3.5.0"
-black = "^24.3.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.uv]
+conflicts = [
+    [{ group = "dagster" }, { group = "dagster-jupyter" }],
+    [{ group = "dagster" }, { group = "dvc" }],
+]
