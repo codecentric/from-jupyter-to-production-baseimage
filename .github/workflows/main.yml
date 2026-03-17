@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo ✅
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Job preparation 🛫 # Steps that must be carried out before creating the Docker images
         uses: ./.github/actions/shared-build-steps
@@ -22,13 +22,13 @@ jobs:
 
       - name: Docker meta 💬 # Creating meta information such as the image tag for the Docker image
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: codecentric/from-jupyter-to-production-mlflow
 
       - name: Build and push mlflow Docker image 🔨🐳
         id: docker_build_mlflow
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./docker/mlflow/Dockerfile
@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo ✅
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Job preparation 🛫 # Steps that must be carried out before creating the Docker images
         uses: ./.github/actions/shared-build-steps
@@ -56,13 +56,13 @@ jobs:
 
       - name: Docker meta 💬 # Creating meta information such as the image tag for the Docker image
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: codecentric/from-jupyter-to-production-jupyter
 
       - name: Build and push jupyter Docker image 🔨🐳
         id: docker_build_jupyter
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./docker/jupyter/Dockerfile
@@ -80,7 +80,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo ✅
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Job preparation 🛫 # Steps that must be carried out before creating the Docker images
         uses: ./.github/actions/shared-build-steps
@@ -90,13 +90,13 @@ jobs:
 
       - name: Docker meta 💬 # Creating meta information such as the image tag for the Docker image
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: codecentric/from-jupyter-to-production-dagster
 
       - name: Build and push dagster Docker image 🔨🐳
         id: docker_build_dagster
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./docker/dagster/Dockerfile
@@ -113,7 +113,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo ✅
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Job preparation 🛫 # Steps that must be carried out before creating the Docker images
         uses: ./.github/actions/shared-build-steps
@@ -123,13 +123,13 @@ jobs:
 
       - name: Docker meta 💬 # Creating meta information such as the image tag for the Docker image
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: codecentric/from-jupyter-to-production-code-server
 
       - name: Build and push code-server Docker image 🔨🐳
         id: docker_build_code_server
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: ./docker/code-server
           file: ./docker/code-server/Dockerfile
@@ -146,7 +146,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo ✅
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Job preparation 🛫 # Steps that must be carried out before creating the Docker images
         uses: ./.github/actions/shared-build-steps
@@ -156,13 +156,13 @@ jobs:
 
       - name: Docker meta 💬 # Creating meta information such as the image tag for the Docker image
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: codecentric/from-jupyter-to-production-registry
 
       - name: Build and push registry Docker image 🔨🐳
         id: docker_build_registry
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./docker/registry/Dockerfile

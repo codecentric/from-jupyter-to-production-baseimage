@@ -6,7 +6,7 @@
 # PYTHON-BASE
 # Sets up all our shared environment variables
 ################################
-FROM --platform=$TARGETPLATFORM registry
+FROM registry
 RUN apk --no-cache add apache2-utils
 
 ENV SHELL="/bin/bash"
