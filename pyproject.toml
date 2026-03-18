@@ -1,15 +1,15 @@
 [project]
 name = "workshop"
-version = "24.12.05"
+version = "26.03.17"
 description = "Baseimage used in the workshop 'from jupyter to production'"
 requires-python = ">=3.11, <3.13"
 dependencies = [
-    "jupyterlab>=4,<5",
-    "jupyterlab-code-formatter>=3,<4",
-    "jupyterlab-lsp>=5,<6",
-    "ipywidgets>=8,<9",
-    "pandas>=2",
-    "scikit-learn>=1.5",
+  "jupyterlab>=4,<5",
+  "jupyterlab-code-formatter>=3,<4",
+  "jupyterlab-lsp>=5,<6",
+  "ipywidgets>=8,<9",
+  "pandas>=2",
+  "scikit-learn>=1.5",
 ]
 
 [dependency-groups]
@@ -17,40 +17,43 @@ dvc = ["dvc>=3.22", "pathspec<1.0.0"]
 
 # Installed in jupyter container: dagster pinned <1.9.3 (compatible with antlr4 4.9.x = dvc-compatible)
 dagster-jupyter = [
-    "dagster>=1.8.0,<1.9.3",
-    "dagster-mlflow>=0.24.0,<0.26",
-    "dagster-postgres>=0.24.0,<0.26",
-    "jupytext>=1.15.2,<2",
-    "xgboost>=3.0,<4",
+  "dagster>=1.8.0,<1.9.3",
+  "dagster-mlflow>=0.24.0,<0.26",
+  "dagster-postgres>=0.24.0,<0.26",
+  "jupytext>=1.15.2,<2",
+  "xgboost>=3.0,<4",
 ]
 
 # Installed in dagster container: latest dagster with new UI (no antlr4 or dvc constraint)
 dagster = [
-    "antlr4-python3-runtime>=4.13",
-    "dagster>=1.9.3",
-    "dagster-mlflow>=0.25.3",
-    "dagster-postgres>=0.25.3",
-    "dagster-webserver>=1.9.3",
-    "xgboost>=3.0,<4",
+  "antlr4-python3-runtime>=4.13",
+  "dagster>=1.9.3",
+  "dagster-mlflow>=0.25.3",
+  "dagster-postgres>=0.25.3",
+  "dagster-webserver>=1.9.3",
+  "xgboost>=3.0,<4",
 ]
 mlflow = [
-    "pip>=25",
-    "mlflow[extras]>=3.0",
-    "psycopg2-binary>=2.9.10,<3",
-    "pymysql[rsa]>=1.1.1,<2",
+  "pip>=25",
+  "mlflow[extras]>=3.0",
+  "psycopg2-binary>=2.9.10,<3",
+  "pymysql[rsa]>=1.1.1,<2",
 ]
 onnx = [
-    "fastapi[standard]>=0.115.6,<0.116",
-    "onnxruntime>=1.20,<2",
-    "skl2onnx>=1.17.0,<2",
+  "fastapi[standard]>=0.135.1",
+  "onnxruntime>=1.20.1,<2",
+  "skl2onnx>=1.20.0,<2",
 ]
-dev = [
-    "pre-commit>=4.0,<5",
-    "black>=25,<26",
-]
+dev = ["pre-commit>=4.0,<5", "black>=25,<26"]
 
 [tool.uv]
 conflicts = [
-    [{ group = "dagster" }, { group = "dagster-jupyter" }],
-    [{ group = "dagster" }, { group = "dvc" }],
+  [
+    { group = "dagster" },
+    { group = "dagster-jupyter" },
+  ],
+  [
+    { group = "dagster" },
+    { group = "dvc" },
+  ],
 ]

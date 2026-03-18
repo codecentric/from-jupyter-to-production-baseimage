@@ -1454,7 +1454,7 @@ version = "2.32.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp-retry" },
-    { name = "fsspec", extra = ["http"], marker = "(extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra != 'group-8-workshop-dagster-jupyter' and extra == 'group-8-workshop-dvc') or (extra != 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "fsspec", extra = ["http"], marker = "extra == 'group-8-workshop-dagster-jupyter' or extra == 'group-8-workshop-dvc' or extra != 'group-8-workshop-dagster'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/33/e6/4fb38ab911a9d90fbe2c7759c430814fe2253760304a9de0d3ebd6e27c20/dvc-http-2.32.0.tar.gz", hash = "sha256:f714f8435634aab943c625f659ddac1188c6ddaf3ff161b39715b83ff39637fc", size = 14603, upload-time = "2023-12-13T10:53:16.393Z" }
 wheels = [
@@ -1546,16 +1546,18 @@ wheels = [
 
 [[package]]
 name = "fastapi"
-version = "0.115.14"
+version = "0.135.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
+    { name = "annotated-doc" },
     { name = "pydantic" },
     { name = "starlette" },
     { name = "typing-extensions" },
+    { name = "typing-inspection" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ca/53/8c38a874844a8b0fa10dd8adf3836ac154082cf88d3f22b544e9ceea0a15/fastapi-0.115.14.tar.gz", hash = "sha256:b1de15cdc1c499a4da47914db35d0e4ef8f1ce62b624e94e0e5824421df99739", size = 296263, upload-time = "2025-06-26T15:29:08.21Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e7/7b/f8e0211e9380f7195ba3f3d40c292594fd81ba8ec4629e3854c353aaca45/fastapi-0.135.1.tar.gz", hash = "sha256:d04115b508d936d254cea545b7312ecaa58a7b3a0f84952535b4c9afae7668cd", size = 394962, upload-time = "2026-03-01T18:18:29.369Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/53/50/b1222562c6d270fea83e9c9075b8e8600b8479150a18e4516a6138b980d1/fastapi-0.115.14-py3-none-any.whl", hash = "sha256:6c0c8bf9420bd58f565e585036d971872472b4f7d3f6c73b698e10cffdefb3ca", size = 95514, upload-time = "2025-06-26T15:29:06.49Z" },
+    { url = "https://files.pythonhosted.org/packages/e4/72/42e900510195b23a56bde950d26a51f8b723846bfcaa0286e90287f0422b/fastapi-0.135.1-py3-none-any.whl", hash = "sha256:46e2fc5745924b7c840f71ddd277382af29ce1cdb7d5eab5bf697e3fb9999c9e", size = 116999, upload-time = "2026-03-01T18:18:30.831Z" },
 ]
 
 [package.optional-dependencies]
@@ -1564,6 +1566,8 @@ standard = [
     { name = "fastapi-cli", extra = ["standard"] },
     { name = "httpx" },
     { name = "jinja2" },
+    { name = "pydantic-extra-types" },
+    { name = "pydantic-settings" },
     { name = "python-multipart" },
     { name = "uvicorn", extra = ["standard"] },
 ]
@@ -3941,6 +3945,19 @@ wheels = [
 ]
 
 [[package]]
+name = "pydantic-extra-types"
+version = "2.11.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/66/71/dba38ee2651f84f7842206adbd2233d8bbdb59fb85e9fa14232486a8c471/pydantic_extra_types-2.11.1.tar.gz", hash = "sha256:46792d2307383859e923d8fcefa82108b1a141f8a9c0198982b3832ab5ef1049", size = 172002, upload-time = "2026-03-16T08:08:03.92Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/17/c1/3226e6d7f5a4f736f38ac11a6fbb262d701889802595cdb0f53a885ac2e0/pydantic_extra_types-2.11.1-py3-none-any.whl", hash = "sha256:1722ea2bddae5628ace25f2aa685b69978ef533123e5638cfbddb999e0100ec1", size = 79526, upload-time = "2026-03-16T08:08:02.533Z" },
+]
+
+[[package]]
 name = "pydantic-settings"
 version = "2.13.1"
 source = { registry = "https://pypi.org/simple" }
@@ -4598,7 +4615,7 @@ dependencies = [
     { name = "aiohttp-retry" },
     { name = "asyncssh" },
     { name = "dulwich" },
-    { name = "fsspec", extra = ["tqdm"], marker = "(extra == 'group-8-workshop-dagster' and extra == 'group-8-workshop-dagster-jupyter') or (extra != 'group-8-workshop-dagster-jupyter' and extra == 'group-8-workshop-dvc') or (extra != 'group-8-workshop-dagster' and extra == 'group-8-workshop-dvc')" },
+    { name = "fsspec", extra = ["tqdm"], marker = "extra == 'group-8-workshop-dagster-jupyter' or extra == 'group-8-workshop-dvc' or extra != 'group-8-workshop-dagster'" },
     { name = "funcy", marker = "python_full_version < '3.12'" },
     { name = "gitpython" },
     { name = "pathspec" },
@@ -5303,7 +5320,7 @@ wheels = [
 
 [[package]]
 name = "workshop"
-version = "24.12.5"
+version = "26.3.17"
 source = { virtual = "." }
 dependencies = [
     { name = "ipywidgets" },
@@ -5391,9 +5408,9 @@ mlflow = [
     { name = "pymysql", extras = ["rsa"], specifier = ">=1.1.1,<2" },
 ]
 onnx = [
-    { name = "fastapi", extras = ["standard"], specifier = ">=0.115.6,<0.116" },
-    { name = "onnxruntime", specifier = ">=1.20,<2" },
-    { name = "skl2onnx", specifier = ">=1.17.0,<2" },
+    { name = "fastapi", extras = ["standard"], specifier = ">=0.135.1" },
+    { name = "onnxruntime", specifier = ">=1.20.1,<2" },
+    { name = "skl2onnx", specifier = ">=1.20.0,<2" },
 ]
 
 [[package]]
